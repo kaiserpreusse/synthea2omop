@@ -17,5 +17,5 @@ services:
         - POSTGRES_HOST=${POSTGRES_HOST}
         - SYNTHEA_VERSION=${SYNTHEA_VERSION}
       volumes:
-        - ./output:/output
+        - ${OUTPUT_PATH}:/output
         - ${VOCAB_PATH}:/vocabulary
