@@ -43,9 +43,14 @@ also starts a Postgres database.
 
 See the compose file for required ENV variables.
 
-## OMOP CDM v6
-- right now this works with OMOP CDM 5.3.1 only
-- in principle, the [ETL-Synthea](https://github.com/OHDSI/ETL-Synthea) can also load to OMOP CDM v6
-- for now some things are hardcoded to v5.3.1 but this can be parameterized in future:
-    - github tag that is required in `ETLSyntheaBuilder::CreateCDMIndexAndConstraintScripts`
-    - execution of index/constraint scripts
+## TODO
+- OMOP CDM v6
+    - right now this works with OMOP CDM 5.3.1 only
+    - in principle, the [ETL-Synthea](https://github.com/OHDSI/ETL-Synthea) can also load to OMOP CDM v6
+    - for now some things are hardcoded to v5.3.1 but this can be parameterized in future:
+        - github tag that is required in `ETLSyntheaBuilder::CreateCDMIndexAndConstraintScripts`
+        - execution of index/constraint scripts
+- separate vocabulary loading and Synthea ETL
+    - loading vocabulary takes most of the total run time
+    - only has to be loaded once, works with different Synthea outputs
+    - maybe `run_loading --skip-vocab` to only truncate event tables and reload and `run_loading --full` to drop all tables and reload everything
