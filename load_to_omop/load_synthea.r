@@ -16,19 +16,20 @@ DatabaseConnector::downloadJdbcDrivers(
 
  cd <- DatabaseConnector::createConnectionDetails(
   dbms     = "postgresql", 
-  server   = "postgres/synthea", 
-  user     = "postgres", 
-  password = "test", 
+  server   = paste(Sys.getenv("POSTGRES_HOST"), "/synthea", sep=""),
+  user     = Sys.getenv("POSTGRES_USER"), 
+  password = Sys.getenv("POSTGRES_PASSWORD"), 
   port     = 5432,
   pathToDriver = '/'
 )
 
 cdmSchema      <- "cdm_synthea10"
 cdmVersion     <- "5.3.1"
-syntheaVersion <- "2.6.1"
+syntheaVersion <- Sys.getenv("SYNTHEA_VERSION")
 syntheaSchema  <- "native"
 syntheaFileLoc <- "/output/csv"
 vocabFileLoc   <- "/vocabulary"
+
 
 conn <- DatabaseConnector::connect(cd)
 
@@ -38,17 +39,18 @@ DatabaseConnector::executeSql(conn, 'DROP SCHEMA IF EXISTS native CASCADE')
 DatabaseConnector::executeSql(conn, 'CREATE SCHEMA IF NOT EXISTS cdm_synthea10')
 DatabaseConnector::executeSql(conn, 'CREATE SCHEMA IF NOT EXISTS native')
 
-
 ETLSyntheaBuilder::CreateCDMTables(connectionDetails = cd, cdmSchema = cdmSchema, cdmVersion = cdmVersion)
-                                     
-ETLSyntheaBuilder::CreateSyntheaTables(connectionDetails = cd, syntheaSchema = syntheaSchema, syntheaVersion = syntheaVersion)
-                                       
+
+# create and load Synthea native
+ETLSyntheaBuilder::CreateSyntheaTables(connectionDetails = cd, syntheaSchema = syntheaSchema, syntheaVersion = syntheaVersion)                                       
 ETLSyntheaBuilder::LoadSyntheaTables(connectionDetails = cd, syntheaSchema = syntheaSchema, syntheaFileLoc = syntheaFileLoc)
-                                     
+
+# Load Vocabulary                                     
 ETLSyntheaBuilder::LoadVocabFromCsv(connectionDetails = cd, cdmSchema = cdmSchema, vocabFileLoc = vocabFileLoc)
-                                    
-ETLSyntheaBuilder::LoadEventTables(connectionDetails = cd, cdmSchema = cdmSchema, syntheaSchema = syntheaSchema, cdmVersion = cdmVersion)
+
+# Synthea ETL
+ETLSyntheaBuilder::LoadEventTables(connectionDetails = cd, cdmSchema = cdmSchema, syntheaSchema = syntheaSchema, cdmVersion = cdmVersion, syntheaVersion = syntheaVersion)
 
 # Optional: Create index and constraint DDL scripts for the rdbms that support them.  Scripts will be written to the "output" directory.
-ETLSyntheaBuilder::CreateCDMIndexAndConstraintScripts(connectionDetails = cd, cdmSchema = cdmSchema, cdmVersion = cdmVersion)
+ETLSyntheaBuilder::CreateCDMIndexAndConstraintScripts(connectionDetails = cd, cdmSchema = cdmSchema, cdmVersion = cdmVersion, githubTag = "v5.3.1")
 

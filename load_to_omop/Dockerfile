@@ -13,7 +13,4 @@ ENV POSTGRES_PATH=/usr/lib/postgresql/11/bin
 COPY load_synthea.r /
 COPY entrypoint.sh /
 
-RUN echo $JAVA_HOME
-RUN which java
-
 CMD bash /entrypoint.sh
