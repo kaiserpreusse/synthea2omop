@@ -36,7 +36,7 @@ Build and run the `generate_synthea` image, e.g. with the provided compose file:
 See the compose file for required ENV variables.
 
 ### 2. Load Synthea dat to OMOP CDM
-Build and run the `generate_synthea` image, e.g. with the provided compose file. Note that the compose file
+Build and run the `load_to_omop` image, e.g. with the provided compose file. Note that the compose file
 also starts a Postgres database.
 
 ```docker-compose -f compose_load_data.yml up --build```
