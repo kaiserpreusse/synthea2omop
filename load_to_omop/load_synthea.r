@@ -36,7 +36,9 @@ conn <- DatabaseConnector::connect(cd)
 # drop and recreate CDM schema
 DatabaseConnector::executeSql(conn, 'DROP SCHEMA IF EXISTS cdm_synthea10 CASCADE')
 DatabaseConnector::executeSql(conn, 'CREATE SCHEMA IF NOT EXISTS cdm_synthea10')
-ETLSyntheaBuilder::TruncateEventTables(connectionDetails = cd, cdmSchema = cdmSchema)
+
+# only used for updates: truncate the event tables but do not drop them
+#ETLSyntheaBuilder::TruncateEventTables(connectionDetails = cd, cdmSchema = cdmSchema)
 
 # drop and recreate Synthea native schema
 DatabaseConnector::executeSql(conn, 'DROP SCHEMA IF EXISTS native CASCADE')
