@@ -1,4 +1,4 @@
- library(ETLSyntheaBuilder)
+library(ETLSyntheaBuilder)
 library(SqlRender)
 
  # We are loading a version 5.3.1 CDM into a local PostgreSQL database called "synthea10".  
@@ -33,12 +33,16 @@ vocabFileLoc   <- "/vocabulary"
 
 conn <- DatabaseConnector::connect(cd)
 
+# drop and recreate CDM schema
 DatabaseConnector::executeSql(conn, 'DROP SCHEMA IF EXISTS cdm_synthea10 CASCADE')
-DatabaseConnector::executeSql(conn, 'DROP SCHEMA IF EXISTS native CASCADE')
-
 DatabaseConnector::executeSql(conn, 'CREATE SCHEMA IF NOT EXISTS cdm_synthea10')
+ETLSyntheaBuilder::TruncateEventTables(connectionDetails = cd, cdmSchema = cdmSchema)
+
+# drop and recreate Synthea native schema
+DatabaseConnector::executeSql(conn, 'DROP SCHEMA IF EXISTS native CASCADE')
 DatabaseConnector::executeSql(conn, 'CREATE SCHEMA IF NOT EXISTS native')
 
+# create CDM tables
 ETLSyntheaBuilder::CreateCDMTables(connectionDetails = cd, cdmSchema = cdmSchema, cdmVersion = cdmVersion)
 
 # create and load Synthea native
