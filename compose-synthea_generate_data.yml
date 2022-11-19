@@ -1,6 +1,6 @@
 version: "3.8"
 services:
     generate_synthea:
-      build: ./generate_synthea
+      build: ./synthea_generate_data
       volumes:
         - ${OUTPUT_PATH}:/output

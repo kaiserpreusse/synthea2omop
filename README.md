@@ -1,6 +1,6 @@
 
 # Create Synthea data and load to OMOP CDM (v5.3.1)
-Docker images to (1) generate Synthea data and (2) load Synthea data into OMOP CDM. The goal is to quickly spin up OMOP CDM with data 
+Docker images to (1) generate Synthea data and (2) load Synthea data into OMOP CDM. The goal is to quickly load an OMOP CDM with data
 for testing and demonstration.
 
 1. Synthea data is created with the official Synthea builder: https://github.com/synthetichealth/synthea
@@ -8,35 +8,36 @@ for testing and demonstration.
 
 > :warning: Some settings are not parameterized yet. For now Postgres and OMOP CDM v5.3.1 are hard coded.
 
-> :warning: This should work with Synthea version 2.7.0 and the latest master but only master was tested.
+> :warning: This was only tested with Synthea 3.0.0.
 
 > :warning: Building the images takes considerable time because R builds a lot of packages from source. Help with this issue would be appreciated.
 
 ## How to use
 
 ### Prerequresites
-You have to download the default set of vocabularies from https://athena.ohdsi.org/.
+You need a OMOP CDM database with vocabularies.
 
 The following environment variables are needed, best practice is to store them in a `.env` file:
 
 ```
-VOCAB_PATH=/path/to/vocabulary
-OUTPUT_PATH=/mountable/output/path
-POSTGRES_PASSWORD=password for postgres
-POSTGRES_USER=postgres user
-POSTGRES_HOST=host of postgres instance
-SYNTHEA_VERSION=Version of synthea (either 2.7.0 or master)
+VOCAB_PATH=/Users/mpreusse/daten/archiv/datasets/omop/vocabularies/2022_04_06
+OUTPUT_PATH=Writable local path for output
+POSTGRES_PASSWORD=Postgres password
+POSTGRES_USER=Postgres user
+POSTGRES_HOST=Postgres host
+POSTGRES_DB=Postgres database name
+POSTGRES_PORT=Postgres port
+CDM_SCHEMA=name of CDM schema in OMOP DB
 ```
-
 ### 1. Generate Synthea data
-Build and run the `generate_synthea` image, e.g. with the provided compose file:
+Build and run the `synthea_generate_data` image, e.g. with the provided compose file:
 
 ```docker-compose -f compose_generate_data.yml up --build```
 
 See the compose file for required ENV variables.
 
-### 2. Load Synthea dat to OMOP CDM
-Build and run the `load_to_omop` image, e.g. with the provided compose file. Note that the compose file
+### 2. Load Synthea data to OMOP CDM
+Build and run the `synthea_load_to_omop_cdm` image, e.g. with the provided compose file. Note that the compose file
 also starts a Postgres database.
 
 ```docker-compose -f compose_load_data.yml up --build```
@@ -50,7 +51,3 @@ See the compose file for required ENV variables.
     - for now some things are hardcoded to v5.3.1 but this can be parameterized in future:
         - github tag that is required in `ETLSyntheaBuilder::CreateCDMIndexAndConstraintScripts`
         - execution of index/constraint scripts
-- separate vocabulary loading and Synthea ETL
-    - loading vocabulary takes most of the total run time
-    - only has to be loaded once, works with different Synthea outputs
-    - maybe `run_loading --skip-vocab` to only truncate event tables and reload and `run_loading --full` to drop all tables and reload everything

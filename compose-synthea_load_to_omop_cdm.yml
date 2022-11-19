@@ -1,0 +1,13 @@
+version: "3"
+services:
+    synthea_load_to_omop_cdm:
+      build: synthea_load_to_omop_cdm
+      environment:
+        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+        - POSTGRES_DB=${POSTGRES_DB}
+        - POSTGRES_USER=${POSTGRES_USER}
+        - POSTGRES_HOST=${POSTGRES_HOST}
+        - POSTGRES_PORT=${POSTGRES_PORT}
+        - CDM_SCHEMA=${CDM_SCHEMA}
+      volumes:
+        - ${OUTPUT_PATH}:/output
