@@ -61,7 +61,7 @@ postgres_user = Sys.getenv("POSTGRES_USER")
 postgres_password = Sys.getenv("POSTGRES_PASSWORD")
 postgres_host = Sys.getenv("POSTGRES_HOST")
 postgres_db = Sys.getenv("POSTGRES_DB")
-postgres_port = Sys.getenv("POSTGRES_PORT")
+postgres_port = as.integer(Sys.getenv("POSTGRES_PORT"))
 cdm_schema = Sys.getenv("CDM_SCHEMA")
 print(c(postgres_user, postgres_password, postgres_host, postgres_db, postgres_port, cdm_schema))
 
@@ -79,7 +79,7 @@ cd <- DatabaseConnector::createConnectionDetails(
   server   = postgres_server_url,
   user     = postgres_user,
   password = postgres_password,
-  port     = 15432,
+  port     = postgres_port,
   pathToDriver = "/"
 )
 
