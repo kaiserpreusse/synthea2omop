@@ -83,7 +83,6 @@ cd <- DatabaseConnector::createConnectionDetails(
   pathToDriver = "/"
 )
 
-cdmSchema      <- "cdm"
 cdmVersion     <- "5.3"
 syntheaVersion <- "3.0.0"
 syntheaSchema  <- "native"
@@ -99,7 +98,7 @@ conn <- DatabaseConnector::connect(cd)
 # ETLSyntheaBuilder::CreateCDMTables(connectionDetails = cd, cdmSchema = cdmSchema, cdmVersion = cdmVersion)
 
 # truncate the event tables but do not drop them
-CascadeTruncateEventTables(connectionDetails = cd, cdmSchema = cdmSchema)
+CascadeTruncateEventTables(connectionDetails = cd, cdmSchema = cdm_schema)
 
 # drop and recreate Synthea native schema
 DatabaseConnector::executeSql(conn, 'DROP SCHEMA IF EXISTS native CASCADE')
@@ -110,4 +109,4 @@ ETLSyntheaBuilder::CreateSyntheaTables(connectionDetails = cd, syntheaSchema = s
 ETLSyntheaBuilder::LoadSyntheaTables(connectionDetails = cd, syntheaSchema = syntheaSchema, syntheaFileLoc = syntheaFileLoc)
 
 # Synthea ETL
-ETLSyntheaBuilder::LoadEventTables(connectionDetails = cd, cdmSchema = cdmSchema, syntheaSchema = syntheaSchema, cdmVersion = cdmVersion, syntheaVersion = syntheaVersion)
+ETLSyntheaBuilder::LoadEventTables(connectionDetails = cd, cdmSchema = cdm_schema, syntheaSchema = syntheaSchema, cdmVersion = cdmVersion, syntheaVersion = syntheaVersion)
