@@ -2,5 +2,7 @@ version: "3.8"
 services:
     generate_synthea:
       build: ./synthea_generate_data
+      environment:
+          - SYNTHEA_NUM_PATIENTS=${SYNTHEA_NUM_PATIENTS}
       volumes:
         - ${OUTPUT_PATH}:/output

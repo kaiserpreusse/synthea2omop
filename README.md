@@ -20,7 +20,6 @@ You need a OMOP CDM database with vocabularies.
 The following environment variables are needed, best practice is to store them in a `.env` file:
 
 ```
-VOCAB_PATH=/Users/mpreusse/daten/archiv/datasets/omop/vocabularies/2022_04_06
 OUTPUT_PATH=Writable local path for output
 POSTGRES_PASSWORD=Postgres password
 POSTGRES_USER=Postgres user
@@ -28,6 +27,7 @@ POSTGRES_HOST=Postgres host
 POSTGRES_DB=Postgres database name
 POSTGRES_PORT=Postgres port
 CDM_SCHEMA=name of CDM schema in OMOP DB
+SYNTHEA_NUM_PATIENTS=Number of patients for synthea
 ```
 ### 1. Generate Synthea data
 Build and run the `synthea_generate_data` image, e.g. with the provided compose file:

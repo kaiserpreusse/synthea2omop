@@ -12,4 +12,4 @@ COPY settings.conf /
 
 WORKDIR /output
 
-CMD java -jar /synthea-with-dependencies.jar -p 10 -c /settings.conf
+CMD java -jar /synthea-with-dependencies.jar -p $SYNTHEA_NUM_PATIENTS -c /settings.conf
