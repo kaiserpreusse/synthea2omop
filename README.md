@@ -7,7 +7,6 @@ for testing and demonstration.
 2. Data is loaded to OMOP CDM with the [ETL-Synthea](https://github.com/OHDSI/ETL-Synthea) project developed by OHDSI
 
 Synthea data creation and OMOP ETL version have to be synchronized. The following versins are currently pinned:
-Pinned versions:
 
 | image | module | version |
 | ----- | ----- | ---- | 
