@@ -8,14 +8,12 @@ for testing and demonstration.
 
 > :warning: Some settings are not parameterized yet. For now Postgres and OMOP CDM v5.3.1 are hard coded.
 
-> :warning: This was only tested with Synthea 3.0.0.
-
-> :warning: Building the images takes considerable time because R builds a lot of packages from source. Help with this issue would be appreciated.
+> :warning: Tested with Synthea 3.0.0 only.
 
 ## How to use
 
 ### Prerequresites
-You need a OMOP CDM database with vocabularies.
+You need a OMOP CDM database with vocabularies. Guide to set up a simple test OMOP CDM database in Postgres: https://github.com/kaiserpreusse/omop_database
 
 The following environment variables are needed, best practice is to store them in a `.env` file:
 
@@ -43,6 +41,8 @@ also starts a Postgres database.
 ```docker-compose -f compose_load_data.yml up --build```
 
 See the compose file for required ENV variables.
+
+> :warning: Building the images takes considerable time because R builds a lot of packages from source. Help with this issue would be appreciated.
 
 ## TODO
 - OMOP CDM v6
