@@ -26,7 +26,7 @@ POSTGRES_USER=Postgres user
 POSTGRES_HOST=Postgres host
 POSTGRES_DB=Postgres database name
 POSTGRES_PORT=Postgres port
-CDM_SCHEMA=name of CDM schema in OMOP DB
+CDM_SCHEMA=name of CDM schema in OMOP DB (this has to be set up before, with vocabularies)
 SYNTHEA_NUM_PATIENTS=Number of patients for synthea
 ```
 ### 1. Generate Synthea data
