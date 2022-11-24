@@ -6,9 +6,17 @@ for testing and demonstration.
 1. Synthea data is created with the official Synthea builder: https://github.com/synthetichealth/synthea
 2. Data is loaded to OMOP CDM with the [ETL-Synthea](https://github.com/OHDSI/ETL-Synthea) project developed by OHDSI
 
-> :warning: Some settings are not parameterized yet. For now Postgres and OMOP CDM v5.3.1 are hard coded.
+Synthea data creation and OMOP ETL version have to be synchronized. The following versins are currently pinned:
+Pinned versions:
 
-> :warning: Tested with Synthea 3.0.0 only.
+| image | module | version |
+| ----- | ----- | ---- | 
+| synthea_generate_data | synthea | 3.0.0 |
+| synthea_load_to_omop | [r-base](https://hub.docker.com/_/r-base) | 4.2.2 |
+| synthea_load_to_omop | [Synthea ETL](https://github.com/OHDSI/ETL-Synthea) | [8e00de1495e9eb7b9627eb109d15e5f928644990](https://github.com/OHDSI/ETL-Synthea/tree/8e00de1495e9eb7b9627eb109d15e5f928644990) |
+| synthea_load_to_omop | OMOP CDM | 5.3 |
+
+> :warning: For now Postgres and OMOP CDM 5.3 are hard coded, the Synthea ETL repo has early support for OMOP CDM 5.4 but this was not tested.
 
 ## How to use
 
