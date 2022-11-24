@@ -13,7 +13,9 @@ for testing and demonstration.
 ## How to use
 
 ### Prerequresites
-You need a OMOP CDM database with vocabularies. Guide to set up a simple test OMOP CDM database in Postgres: https://github.com/kaiserpreusse/omop_database
+You need a OMOP CDM database with vocabularies.
+
+> :point_right: Guide to set up a simple test OMOP CDM database in Postgres: https://github.com/kaiserpreusse/omop_database
 
 The following environment variables are needed, best practice is to store them in a `.env` file:
 
