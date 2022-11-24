@@ -11,9 +11,9 @@ Synthea data creation and OMOP ETL version have to be synchronized. The followin
 | image | module | version |
 | ----- | ----- | ---- | 
 | synthea_generate_data | synthea | 3.0.0 |
-| synthea_load_to_omop | [r-base](https://hub.docker.com/_/r-base) | 4.2.2 |
-| synthea_load_to_omop | [Synthea ETL](https://github.com/OHDSI/ETL-Synthea) | [8e00de1495e9eb7b9627eb109d15e5f928644990](https://github.com/OHDSI/ETL-Synthea/tree/8e00de1495e9eb7b9627eb109d15e5f928644990) |
-| synthea_load_to_omop | OMOP CDM | 5.3 |
+| synthea_load_to_omop_cdm | [r-base](https://hub.docker.com/_/r-base) | 4.2.2 |
+| synthea_load_to_omop_cdm | [Synthea ETL](https://github.com/OHDSI/ETL-Synthea) | [8e00de1495e9eb7b9627eb109d15e5f928644990](https://github.com/OHDSI/ETL-Synthea/tree/8e00de1495e9eb7b9627eb109d15e5f928644990) |
+| synthea_load_to_omop_cdm | OMOP CDM | 5.3 |
 
 > :warning: For now Postgres and OMOP CDM 5.3 are hard coded, the Synthea ETL repo has early support for OMOP CDM 5.4 but this was not tested.
 
