@@ -6,7 +6,7 @@ for testing and demonstration.
 1. Synthea data is created with the official Synthea builder: https://github.com/synthetichealth/synthea
 2. Data is loaded to OMOP CDM with the [ETL-Synthea](https://github.com/OHDSI/ETL-Synthea) project developed by OHDSI
 
-Synthea data creation and OMOP ETL version have to be synchronized. The following versins are currently pinned:
+Synthea data creation and OMOP ETL version have to be synchronized. The following versions are currently pinned:
 
 | image | module | version |
 | ----- | ----- | ---- | 
