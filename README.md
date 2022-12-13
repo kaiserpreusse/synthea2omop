@@ -39,15 +39,14 @@ SYNTHEA_NUM_PATIENTS=Number of patients for synthea
 ### 1. Generate Synthea data
 Build and run the `synthea_generate_data` image, e.g. with the provided compose file:
 
-```docker-compose -f compose_generate_data.yml up --build```
+```docker-compose -f compose-synthea_generate_data.yml up --build```
 
 See the compose file for required ENV variables.
 
 ### 2. Load Synthea data to OMOP CDM
-Build and run the `synthea_load_to_omop_cdm` image, e.g. with the provided compose file. Note that the compose file
-also starts a Postgres database.
+Build and run the `synthea_load_to_omop_cdm` image, e.g. with the provided compose file. 
 
-```docker-compose -f compose_load_data.yml up --build```
+```docker-compose -f compose-synthea_load_to_omop_cdm.yml up --build```
 
 See the compose file for required ENV variables.
 
