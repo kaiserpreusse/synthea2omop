@@ -4,6 +4,7 @@ library(SqlRender)
 # Function to CASCADE TRUNCATE event tables
 CascadeTruncateEventTables <- function(connectionDetails, cdmSchema)
 {
+message("Truncating event tables...")
 eventTables <- c(
 "CARE_SITE",
 "CDM_SOURCE",
@@ -35,21 +36,38 @@ eventTables <- c(
 )
 
 conn <- DatabaseConnector::connect(connectionDetails)
-allTables <- DatabaseConnector::getTableNames(conn, cdmSchema)
-tablesToTruncate <- allTables[which(allTables %in% eventTables)]
-sql <-
-paste(
-"truncate table @cdm_schema.",
-tablesToTruncate,
-" CASCADE;",
-collapse = "\n",
-sep = ""
-)
-sql <- SqlRender::render(sql, cdm_schema = cdmSchema)
-sql <-
-SqlRender::translate(sql, targetDialect = connectionDetails$dbms)
-DatabaseConnector::executeSql(conn, sql)
+
+# loop version 1
+for (p in eventTables) {
+  print(p)
+
+      sql <-
+    paste(
+    "truncate table @cdm_schema.",
+    p,
+    " CASCADE;",
+    collapse = "\n",
+    sep = ""
+    )
+    sql <- SqlRender::render(sql, cdm_schema = cdmSchema)
+
+    sql <-
+    SqlRender::translate(sql, targetDialect = connectionDetails$dbms)
+    message(sql)
+
+
+    tryCatch(
+    expr = {DatabaseConnector::executeSql(conn, sql)},
+    error = function(e) {
+        print(e)
+    }
+    )
+
+    }
+
+
 on.exit(DatabaseConnector::disconnect(conn))
+
 }
 
  # The ETLSyntheaBuilder package leverages the OHDSI/CommonDataModel package for CDM creation.
@@ -84,7 +102,7 @@ cd <- DatabaseConnector::createConnectionDetails(
 )
 
 cdmVersion     <- "5.3"
-syntheaVersion <- "3.0.0"
+syntheaVersion <- "3.2.0"
 syntheaSchema  <- "native"
 syntheaFileLoc <- "/output/csv"
 
@@ -107,6 +125,9 @@ ETLSyntheaBuilder::CreateSyntheaTables(connectionDetails = cd, syntheaSchema = s
 
 # create and load Synthea native
 ETLSyntheaBuilder::LoadSyntheaTables(connectionDetails = cd, syntheaSchema = syntheaSchema, syntheaFileLoc = syntheaFileLoc)
+
+# create map tables
+ETLSyntheaBuilder::CreateMapAndRollupTables(connectionDetails = cd, cdmSchema = cdm_schema, syntheaSchema = syntheaSchema, cdmVersion = cdmVersion, syntheaVersion = syntheaVersion)
 
 # Synthea ETL
 ETLSyntheaBuilder::LoadEventTables(connectionDetails = cd, cdmSchema = cdm_schema, syntheaSchema = syntheaSchema, cdmVersion = cdmVersion, syntheaVersion = syntheaVersion)
